@@ -1,0 +1,53 @@
+{
+    "background_image_urls": [
+        "https://giffiles.alphacoders.com/214/214384.gif",
+        "https://cdnb.artstation.com/p/assets/images/images/024/538/827/original/pixel-jeff-clipa-s.gif?1582740711",
+        "https://i.redd.it/bpxxqqvps4h91.gif",
+        "https://i.redd.it/0k6meqvps4h91.gif",
+        "https://i.redd.it/uwwte8wps4h91.gif"
+    ],
+
+    "title": "Power \nManagement Server",
+    "target": "http://127.0.0.1:5000/",
+    
+    "form_elements": [
+        {
+            "header": {
+                "header_text": "Password:"
+            }
+        },
+        {
+            "password": {
+                "input_name": "password",
+                "placeholder": "password"
+            }
+        },
+        {
+            "header": {
+                "header_text": "Options:"
+            }
+        },
+        {
+            "grouped_radioMaster": {
+                "input_name": "mode",
+                "radio_options": [
+                    {
+                        "option_label": "Turn On",
+                        "option_value": "on"
+                    },
+                    {
+                        "option_label": "Turn Off",
+                        "option_value": "off"
+                    }
+                ]
+            }
+        },
+        {
+            "submit": {
+                "value": "Send",
+                "font_size": "1.2rem",
+                "font_weight": 600
+            }
+        }        
+    ]
+}

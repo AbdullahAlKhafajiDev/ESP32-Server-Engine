@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="https://gronkfrax.com/icon.ico">
+    <title>PC Management System</title>
+    <style>
+        body {
+
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            
+            min-height: 100vh;
+            width: 100vw;
+
+            animation: bgShift 10s linear infinite; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: url(https://giffiles.alphacoders.com/214/214384.gif) center;
+            background-size: cover;
+        }
+
+        .container {
+            width: 100%;
+        }
+
+        .window {
+            --blur-value: 10px;
+
+            background-image: linear-gradient(to bottom right, #9c71c4, #7492d17c, #9c71c4e8, #7492d17c, #9c71c4);
+            background-blend-mode: color-burn;
+            background-size: 300% 300%;
+            
+            -webkit-backdrop-filter: blur(var(--blur-value));
+            backdrop-filter: blur(var(--blur-value));
+
+            animation: color 12s ease-in-out infinite;
+
+            box-shadow: 0px 0px 10px #4a575980;
+
+            padding: 2rem 4rem 2rem 4rem;
+            
+            border-radius: 2rem;
+
+            max-width: 24.4rem;
+            /* max-width: fit-content; */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .title {
+            text-align: center;
+            background-color: black;
+            color: white;
+            font-size: 2rem;
+            padding: 1rem;
+            border-radius: 1.5rem;
+        }
+
+        .options {
+            color: white;
+
+            width: min(10vw, fit-content);
+            margin-left: max(1rem, 1vw);
+            margin-right: 0;
+        }
+
+        .inputSectionTitle {
+            margin-block-start: 1rem;
+            margin-block-end: 0.8rem;
+        }
+
+        .passwordField {
+            max-width: 100%;
+            margin-bottom: 0.5rem;
+            padding: 0.4rem 0.5rem;
+            border-radius: 0.5rem;
+            font-size: 1.2rem;
+
+            color: white;
+
+            background-color: rgba(0, 0, 0, 0.726);
+            background-blend-mode:luminosity;
+            backdrop-filter: blur(1px);
+
+            border: solid #9c71c4 1px;
+        }
+
+        .passwordField::placeholder {
+            color: white;
+            opacity: 0.2;
+        }
+
+        .passwordField:focus {
+            border: solid orange 1px;
+            opacity: 0.8;
+        }
+
+        .list-item {
+            font-size: 1.2rem;
+            list-style: none;
+            padding: 0 0 0.8rem;
+        }
+
+        .radioOptions {
+            appearance: none;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            border: 2px solid black;
+            transition: 0.2s all linear;
+        }
+
+        .radioOptions:checked {
+            border: 6px solid black;
+        }
+
+        .radioOptions:hover, label:hover {
+            cursor: pointer;
+        }
+
+        .button {
+            --textColor: white;
+            --backgroundColor: black;
+
+            font-weight: 600;
+
+            width: 7rem;
+            height: 3rem;
+            font-size: 2rem;
+            margin-top: 1rem;
+            border-radius: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+
+            transition-duration: 0.2s;
+
+            background-image: radial-gradient(yellow, orange);
+            box-shadow: 0px 0px 20px orange;
+            /* background-color: var(--backgroundColor); */
+            color: black;
+
+            border: none;
+        }
+
+        .button:hover {
+            color: var(--backgroundColor);
+            box-shadow: 0px 0px 80px orange;
+
+            cursor: pointer;
+        }
+
+        .console-window {
+            color: white;
+            font-family: Courier;
+
+            min-height: 20vh;
+            background-color: black;
+            
+            border-radius: 1rem;
+            max-width: 32rem;
+
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 2rem;
+
+            overflow: hidden; 
+        }
+
+        .console-window > span {
+            display: inline-block;
+            padding-top: 1rem;
+            padding-left: 1rem;
+        }
+
+        .console-window > ul {
+            width: 85%;
+            padding-bottom: 1rem;
+
+            overflow-x: hidden; 
+            word-wrap: break-word;
+        }
+
+        .console-window li {
+            white-space: normal;  
+            word-wrap: break-word; 
+            word-break: break-all; 
+        }
+
+        @keyframes bgShift {
+            0% {
+                background-color: #fff1fa;
+            }
+            25% {
+                background-color: #e2daff;
+            }
+            50% {
+                background-color: #e7ffe9;
+            }
+            75% {
+                background-color: #e2daff;
+            }
+            100% {
+                background-color: #fff1fa;
+            }
+        }
+
+        @keyframes color {
+            0% {
+                background-position: 0 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0 50%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="window">
+            <h1 class="title">Abdullah's Remote Power<br> Management Server</h1>
+            <form class="options" method="post" target="_self" action="http://127.0.0.1:5000/">
+                <h2 class="inputSectionTitle">Password:</h2>
+                <input type="password" class="passwordField" name="password" placeholder="password" required />
+                <h2 class="inputSectionTitle">Options:</h2>
+                    <div class="list-item">
+                        <input type="radio" id="turnOnRadio" class="radioOptions" name="mode" value="on" checked="checked" />
+                        <label for="turnOnRadio">Turn On</label>
+                    </div>
+                    <div class="list-item">
+                        <input type="radio" id="turnOffRadio" class="radioOptions" name="mode" value="off" />
+                        <label for="turnOffRadio">Turn Off</label>
+                    </div>
+                    
+
+                <input type="submit" class="button" value="Send" />
+            </form>
+        </div>
+        <div class="console-window">
+            <span>console:</span>
+            <ul id="console-output">
+            </ul>
+        </div>
+    </div>
+    <script defer>
+        // Returns an index based on the number of 
+        // items, or itemsCount. Used to loop through
+        // wallpapers based on the date.
+        // parameters: itemsCount <Int>
+        // returns an index <int>.
+        function getWallpaperIndex(itemsCount) {
+            const date = new Date();
+            todaysDate = date.getDate();
+
+            let dateBasedIndex;
+
+            if (todaysDate < itemsCount) {
+                // If today's the 3rd of Jan, and there are
+                // 12 items in the array (12 > 3rd), return 3.
+                dateBasedIndex = todaysDate - 1;
+            } else {
+                dateBasedIndex = todaysDate % itemsCount;
+            }
+
+            return dateBasedIndex;
+        }
+
+        // Retrieves the value of a cookie key. 
+        // parameters: key <String>
+        // returns the value <String> of the passed in key.
+        function getCookie(key) {
+            const cookieValueArray = document.cookie.split("=")
+            for (let i = 0; i < cookieValueArray.length; i++) {
+                if (cookieValueArray[i] == key) {
+                    return cookieValueArray[i + 1].split(";")[0];
+                }
+            }
+        }
+
+        // Adds a new console message with a timestamp.
+        // parameters: message <String>
+        // Doesn't return.
+        function addConsoleMessage(message) {
+            const consoleOutputWindow = document.getElementById('console-output');
+            const newEvent = document.createElement('li');
+            const date = new Date();
+            newEvent.innerText = `${date.toLocaleTimeString('it-IT')} - ${message}`;
+            consoleOutputWindow.appendChild(newEvent);
+        }
+
+        // Halts form default form submission, and sends it
+        // through JavaScript.
+        // parameters: event <Event Object>
+        // Doesn't return.
+        function handleSubmission(event) {
+            event.preventDefault();
+
+            const formElement = document.forms[0];
+            const formData = new FormData(formElement);
+            
+            messageObject = {}
+            
+            for (const [key, value] of formData) {
+                if (key != "password") {
+                    messageObject[key] = value;
+                }
+                else {
+                    // Hashes the password for console window.
+                    messageObject[key] = "*".repeat(formData.get("password").length);
+                }
+            }
+
+            submitForm(formData);
+            addConsoleMessage(`Sending ${JSON.stringify(messageObject)} to the server...`);
+        }
+        
+        // Sends the server the data, and prints response to 
+        // console window.
+        // parameters: data <FormData Object>
+        // Doesn't return.
+        async function submitForm(data) {     
+            try {
+                const response = await fetch(document.forms[0].action, {
+                method: "POST",
+                body: data
+                });
+
+                const jsonResponse = await response.json();
+                
+                try {
+                    addConsoleMessage(`Server: ${jsonResponse.message}`);
+                    //////////////////////// Password Cookie //////////////////////////
+                    // Do NOT uncomment when using under public networks.
+                    // Storing passwords as cookies is not recommended,
+                    // but I'm not going to deny the users the power. 
+                    // const days = 10; // Set the number of days.
+                    // const expires = new Date(Date.now() + days * 864e5).toUTCString();
+                    // document.cookie = `password=${data.get("password")}; expires=${expires}; path=/`;
+                    ///////////////////////////////////////////////////////////////////
+                
+                } catch (error) {
+                    // Would throw an error when the client connects to the server, but doesn't receieve a message back.
+                    addConsoleMessage(`Connected to the server, but encountered a problem.`);
+                    console.log(error);
+                }
+
+            } catch (error) {
+                // Would throw an error when it cannot connect to the server.
+                addConsoleMessage(`Could not contact the server.`);
+            }
+        }
+        
+        // Hands form submission handling to a custom
+        // function.
+        document.forms[0].onsubmit = (event)=> {handleSubmission(event)};
+
+        // Autofills the password using the cookie.
+        if (document.cookie != "") {
+            document.querySelector(".passwordField").value = getCookie("password");
+        }
+
+        // Sets the background based on the date.
+        window.onload = () => {
+            // The number of backgrounds should not exceed 30.
+            // The wallpaper selection algorithm isn't designed for 
+            // more than 30 items.
+            const backgroundUrls = [
+                "https://giffiles.alphacoders.com/214/214384.gif",
+                "https://i.redd.it/x4hnwsvps4h91.gif",
+                "https://cdnb.artstation.com/p/assets/images/images/024/538/827/original/pixel-jeff-clipa-s.gif?1582740711",
+                "https://i.redd.it/bpxxqqvps4h91.gif",
+                "https://i.redd.it/0k6meqvps4h91.gif",
+                "https://i.redd.it/uwwte8wps4h91.gif",
+            ];
+
+            const wallpaperIndex = getWallpaperIndex(backgroundUrls.length);
+            
+            document.body.style.background = `center no-repeat url(${backgroundUrls[wallpaperIndex]})`;
+            document.body.style.backgroundSize = 'cover';
+        }
+
+    </script>
+</body>
+</html>
