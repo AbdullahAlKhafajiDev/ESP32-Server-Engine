@@ -44,9 +44,28 @@ void setup() {
 }
 
 void loop() {
+  if (WiFi.status() != WL_CONNECTED) {
+    Serial.println("WiFi disconnected, attempting to reconnect...");
+    WiFi.begin(ssid, password);
+    unsigned long startAttemptTime = millis();
+
+    // Retry for up to 10 seconds
+    while (WiFi.status() != WL_CONNECTED && millis() - startAttemptTime < 10000) {
+      delay(500);
+      Serial.print(".");
+    }
+
+    if (WiFi.status() == WL_CONNECTED) {
+      Serial.println("Reconnected!");
+    } else {
+      Serial.println("Reconnect failed.");
+    }
+  }
+
   server.handleClient();
   digitalWrite(RELAY_PIN, powerStatus ? LOW : HIGH);
 }
+
 
 // Handles the web form that gets sent to the user upon
 // successful connection to the "/" route.
